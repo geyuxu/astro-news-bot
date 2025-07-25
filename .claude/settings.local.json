@@ -15,7 +15,9 @@
       "mcp__graphiti-memory__search_memory_nodes",
       "mcp__graphiti-memory__add_memory",
       "Bash(git remote add:*)",
-      "Bash(git push:*)"
+      "Bash(git push:*)",
+      "mcp__zen__challenge",
+      "Bash(git -C /Users/geyuxu/repo/blog/geyuxu.com log --oneline -3)"
     ],
     "deny": []
   }

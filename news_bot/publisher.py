@@ -6,20 +6,84 @@ Handles automatic Git operations for news content publishing.
 import subprocess
 import sys
 import os
+import json
 from datetime import datetime
 from pathlib import Path
-from typing import Optional
+from typing import Optional, Dict
 
 
 class NewsPublisher:
-    def __init__(self, repo_path: Optional[str] = None):
+    def __init__(self, repo_path: Optional[str] = None, config_file: str = "config.json"):
         """
         Initialize the news publisher.
         
         Args:
-            repo_path: Path to the git repository (defaults to current directory)
+            repo_path: Path to the git repository (if None, reads from config)
+            config_file: Path to configuration file
         """
-        self.repo_path = Path(repo_path) if repo_path else Path.cwd()
+        self.config = self.load_config(config_file)
+        
+        if repo_path:
+            self.repo_path = Path(repo_path)
+        else:
+            # Get blog directory from config and find git root
+            blog_dir = self.get_blog_directory()
+            self.repo_path = self.find_git_root(blog_dir)
+            
+        print(f"Publisher will operate in git repository: {self.repo_path}")
+    
+    def load_config(self, config_file: str) -> Dict:
+        """Load configuration from JSON file."""
+        try:
+            with open(config_file, 'r', encoding='utf-8') as f:
+                return json.load(f)
+        except FileNotFoundError:
+            print(f"Warning: Config file {config_file} not found, using defaults")
+            return {
+                "output_config": {
+                    "blog_content_dir": "/Users/geyuxu/repo/blog/geyuxu.com/src/content/news",
+                    "use_blog_dir": True
+                }
+            }
+    
+    def get_blog_directory(self) -> Path:
+        """Get the blog directory from configuration."""
+        output_config = self.config.get("output_config", {})
+        
+        if output_config.get("use_blog_dir", False):
+            blog_dir = output_config.get("blog_content_dir", "content/news")
+        else:
+            blog_dir = output_config.get("local_content_dir", "content/news")
+            
+        return Path(blog_dir)
+    
+    def find_git_root(self, start_path: Path) -> Path:
+        """
+        Find the git repository root starting from the given path.
+        
+        Args:
+            start_path: Starting directory path
+            
+        Returns:
+            Path to git repository root
+        """
+        current_path = Path(start_path).resolve()
+        
+        # Walk up the directory tree to find .git
+        while current_path != current_path.parent:
+            if (current_path / ".git").exists():
+                return current_path
+            current_path = current_path.parent
+        
+        # If no .git found, try the parent of blog content directory
+        # For example: /Users/geyuxu/repo/blog/geyuxu.com/src/content/news -> /Users/geyuxu/repo/blog/geyuxu.com
+        blog_content_dir = self.get_blog_directory()
+        possible_repo_root = blog_content_dir.parent.parent.parent  # ../../../ from news directory
+        
+        if (possible_repo_root / ".git").exists():
+            return possible_repo_root
+            
+        raise FileNotFoundError(f"No git repository found from {start_path} upwards")
         
     def check_git_status(self) -> bool:
         """
@@ -195,10 +259,10 @@ def main():
     commit_msg = sys.argv[1]
     auto_push = "--no-push" not in sys.argv
     
-    # Check if we're in a git repository
-    if not Path(".git").exists():
-        print("❌ Error: Not in a git repository")
-        print("Please run this command from the root of your git repository")
+    # Check if config file exists
+    if not Path("config.json").exists():
+        print("❌ Error: config.json not found")
+        print("Please run this command from the astro-news-bot root directory")
         sys.exit(1)
     
     try:

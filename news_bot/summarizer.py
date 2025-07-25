@@ -245,7 +245,11 @@ def main():
         print("Error: Date must be in YYYY-MM-DD format")
         sys.exit(1)
     
+    # Try select file first, fall back to dedup file if selector not implemented
     input_file = f"select_{date}.json"
+    if not os.path.exists(input_file):
+        input_file = f"dedup_{date}.json"
+        print(f"select_{date}.json not found, using {input_file} instead")
     output_file = f"summary_{date}.json"
     
     try:
