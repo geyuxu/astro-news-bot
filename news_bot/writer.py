@@ -13,8 +13,9 @@ import yaml
 
 
 class NewsWriter:
-    def __init__(self):
-        """Initialize the news writer."""
+    def __init__(self, config_file: str = "config.json"):
+        """Initialize the news writer with configuration."""
+        self.config = self.load_config(config_file)
         self.topic_keywords = {
             "人工智能": ["人工智能", "ai", "机器学习", "深度学习", "神经网络", "gpt", "llm", "chatgpt", "openai", "anthropic", "claude"],
             "移动技术": ["苹果", "iphone", "ios", "android", "移动应用", "app store", "智能手机", "平板", "ipad"],
@@ -27,6 +28,22 @@ class NewsWriter:
             "科学研究": ["研究", "科学", "发现", "突破", "实验", "nature", "science"],
             "其他科技": []  # 默认分类
         }
+    
+    def load_config(self, config_file: str) -> Dict:
+        """Load configuration from JSON file."""
+        try:
+            with open(config_file, 'r', encoding='utf-8') as f:
+                return json.load(f)
+        except FileNotFoundError:
+            print(f"Warning: Config file {config_file} not found, using defaults")
+            return {
+                "output_config": {
+                    "blog_content_dir": "/Users/geyuxu/repo/blog/geyuxu.com/src/content/news",
+                    "local_content_dir": "content/news",
+                    "filename_format": "news_{date}.md",
+                    "use_blog_dir": True
+                }
+            }
     
     def categorize_article(self, article: Dict) -> str:
         """
@@ -148,19 +165,33 @@ class NewsWriter:
         
         return "\n".join(content_lines)
     
-    def create_output_directory(self, date: str) -> Path:
+    def get_output_filepath(self, date: str) -> Path:
         """
-        Create the output directory structure.
+        Get the output file path based on configuration.
         
         Args:
             date: Date string in YYYY-MM-DD format
             
         Returns:
-            Path to the created directory
+            Path to the output file
         """
-        output_dir = Path(f"content/news/{date}")
-        output_dir.mkdir(parents=True, exist_ok=True)
-        return output_dir
+        output_config = self.config.get("output_config", {})
+        
+        if output_config.get("use_blog_dir", False):
+            base_dir = output_config.get("blog_content_dir", "content/news")
+        else:
+            base_dir = output_config.get("local_content_dir", "content/news")
+        
+        filename_format = output_config.get("filename_format", "news_{date}.md")
+        filename = filename_format.format(date=date)
+        
+        # Create directory if it doesn't exist
+        base_path = Path(base_dir)
+        base_path.mkdir(parents=True, exist_ok=True)
+        
+        output_file = base_path / filename
+        print(f"Output file path: {output_file}")
+        return output_file
     
     def write_markdown_file(self, input_file: str, date: str) -> str:
         """
@@ -197,9 +228,8 @@ class NewsWriter:
         # Generate markdown content
         content = self.generate_markdown_content(grouped_articles)
         
-        # Create output directory
-        output_dir = self.create_output_directory(date)
-        output_file = output_dir / "index.md"
+        # Get output file path
+        output_file = self.get_output_filepath(date)
         
         # Write the complete markdown file
         with open(output_file, 'w', encoding='utf-8') as f:

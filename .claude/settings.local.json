@@ -11,7 +11,9 @@
       "Bash(git commit:*)",
       "Bash(rm:*)",
       "Bash(cp:*)",
-      "Bash(grep:*)"
+      "Bash(grep:*)",
+      "mcp__graphiti-memory__search_memory_nodes",
+      "mcp__graphiti-memory__add_memory"
     ],
     "deny": []
   }

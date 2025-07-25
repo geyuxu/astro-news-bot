@@ -1,0 +1,18 @@
+{
+  "output_config": {
+    "blog_content_dir": "/Users/geyuxu/repo/blog/geyuxu.com/src/content/news",
+    "local_content_dir": "content/news", 
+    "filename_format": "news_{date}.md",
+    "use_blog_dir": true
+  },
+  "news_config": {
+    "max_articles_per_day": 6,
+    "token_budget_per_day": 4000,
+    "similarity_threshold": 0.85
+  },
+  "llm_config": {
+    "model": "gpt-4o",
+    "max_tokens": 500,
+    "temperature": 0.3
+  }
+}
