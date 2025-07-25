@@ -138,7 +138,7 @@ layout: "news"
   {summary}  
   <{url}>
 
-3. 保存到 content/news/{date}/index.md（路径自动创建）
+3. 保存到 content/news/news_{date}.md（路径自动创建）
 
 验收标准
 	•	指定日期运行后相应 Markdown 文件存在，排版符合 Astro 解析规范
