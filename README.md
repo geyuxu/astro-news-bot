@@ -68,9 +68,14 @@ GUARDIAN_API_KEY=your_guardian_api_key_here
 ```json
 {
   "output_config": {
-    "blog_content_dir": "/path/to/your/blog/src/content/news",
+    "blog_content_dir": "/Users/geyuxu/repo/blog/geyuxu.com/src/content/news",
     "filename_format": "news_{date}.md",
     "use_blog_dir": true
+  },
+  "git_config": {
+    "target_branch": "gh-pages",
+    "auto_switch_branch": true,
+    "push_to_remote": true
   }
 }
 ```
@@ -120,9 +125,206 @@ python -m news_bot.publisher "Add daily news for 2025-07-25"
 
 ### 自动化工作流
 
+#### 方式1：直接运行（推荐）
+
 ```bash
-# 执行完整流程（待实现）
-python -m news_bot.job 2025-07-25
+# 执行完整流程 - 推荐方式
+python -m news_bot.job --date $(date +%Y-%m-%d)
+
+# 或指定特定日期
+python -m news_bot.job --date 2025-07-25
+
+# 干跑模式（跳过发布步骤）
+python -m news_bot.job --date 2025-07-25 --dry-run
+```
+
+#### 方式2：后台脚本执行
+
+```bash
+# 后台执行脚本（包含日志记录）
+./run_daily_news.sh
+
+# 干跑模式测试
+./run_daily_news.sh --dry-run
+
+# 指定日期执行
+./run_daily_news.sh --date 2025-07-25
+```
+
+#### 方式3：调度管理器（阻塞式）
+
+```bash
+# 启动后台调度器（占用终端）
+./scheduler_manager.sh start
+
+# 查看调度器状态
+./scheduler_manager.sh status
+
+# 立即执行一次
+./scheduler_manager.sh run-now
+
+# 查看运行日志
+./scheduler_manager.sh logs
+
+# 停止调度器
+./scheduler_manager.sh stop
+
+# 重启调度器
+./scheduler_manager.sh restart
+
+# 显示配置信息
+./scheduler_manager.sh config
+```
+
+#### 方式4：守护进程模式（推荐）
+
+**真正的后台守护进程，不占用终端，支持完善的启停控制：**
+
+```bash
+# 启动守护进程（完全后台运行）
+./start_daemon.sh start
+
+# 查看运行状态
+./start_daemon.sh status
+
+# 查看运行日志
+./start_daemon.sh logs
+
+# 停止守护进程（优雅关闭 + 强制清理）
+./start_daemon.sh stop
+# 或者快速停止
+./stop_daemon.sh
+
+# 重启守护进程
+./start_daemon.sh restart
+
+# 显示帮助信息
+./start_daemon.sh help
+```
+
+**特点：**
+- ✅ 真正的后台运行，不占用终端
+- ✅ 完善的PID管理和进程清理
+- ✅ 优雅关闭 + 强制停止双重保障
+- ✅ 自动清理残留进程
+- ✅ 详细的启动和停止日志
+
+**Python原生调度器命令：**
+
+```bash
+# 启动调度器（需要保持终端开启）
+python -m news_bot.scheduler start
+
+# 查看调度器状态
+python -m news_bot.scheduler status
+
+# 停止调度器
+python -m news_bot.scheduler stop
+
+# 立即执行一次任务
+python -m news_bot.scheduler run-now
+```
+
+## 后台执行与定时任务
+
+### 推荐方式：守护进程
+
+**最佳实践是使用守护进程模式，完全后台运行，不占用终端：**
+
+```bash
+# 启动守护进程
+./start_daemon.sh start
+
+# 查看状态
+./start_daemon.sh status
+
+# 查看日志
+./start_daemon.sh logs
+
+# 停止守护进程
+./stop_daemon.sh
+```
+
+### 传统方式：cron定时任务
+
+如果不想使用守护进程，也可以使用cron设置每日自动执行：
+
+```bash
+# 编辑crontab
+crontab -e
+
+# 添加定时任务（每天8:05执行）
+5 8 * * * /Users/geyuxu/repo/astro-news-bot/run_daily_news.sh
+
+# 查看已设置的定时任务
+crontab -l
+```
+
+### 日志管理
+
+**守护进程日志：**
+- 守护进程日志：`logs/daemon.log`
+- 调度器日志：`logs/scheduler.log`
+
+**传统脚本日志：**
+- 脚本执行日志：`~/logs/news_bot.log`
+
+**查看日志：**
+```bash
+# 查看守护进程日志
+./start_daemon.sh logs
+
+# 实时监控日志
+tail -f logs/daemon.log
+
+# 查看调度器日志
+tail -f logs/scheduler.log
+```
+
+```bash
+# 查看最新日志
+tail -f ~/logs/news_bot.log
+
+# 查看今天的执行记录
+grep "$(date +%Y-%m-%d)" ~/logs/news_bot.log
+
+# 查看最近10行日志
+tail -10 ~/logs/news_bot.log
+```
+
+## 更新日志
+
+### v1.2.0 (2025-07-26)
+- 🎉 **新增真正的守护进程模式**：完全后台运行，不占用终端
+- 🔧 **修复进程管理问题**：优化PID管理和进程清理机制
+- ✅ **改进停止机制**：支持优雅关闭和强制停止双重保障
+- 🧹 **自动清理功能**：防止进程残留，确保干净停止
+- 📊 **增强日志管理**：详细的启动、运行和停止日志
+- 📝 **完善文档**：新增守护进程使用说明和故障排除指南
+
+### v1.1.0 (2025-07-25)
+- 🚀 **完成全链路实现**：fetcher → dedup → selector → summarizer → writer → publisher
+- ⏰ **后台调度系统**：支持定时任务和手动执行
+- 🛠️ **多种执行方式**：直接运行、脚本执行、调度管理、守护进程
+- 📋 **shell脚本工具**：run_daily_news.sh 和 scheduler_manager.sh
+- 🔄 **cron集成**：支持传统cron定时任务
+- 📄 **完整文档**：README包含所有使用方法和配置说明
+
+### 调度器配置
+
+修改 `config.json` 中的调度器设置：
+
+```json
+{
+  "scheduler_config": {
+    "enabled": true,
+    "timezone": "Asia/Shanghai",
+    "cron_expression": "0 8 * * *",
+    "dry_run": false,
+    "max_retries": 3,
+    "retry_interval_minutes": 30
+  }
+}
 ```
 
 ## 配置说明
@@ -137,6 +339,11 @@ python -m news_bot.job 2025-07-25
     "filename_format": "文件命名格式，如 news_{date}.md",
     "use_blog_dir": "是否输出到博客目录"
   },
+  "git_config": {
+    "target_branch": "Git目标分支",
+    "auto_switch_branch": "是否自动切换分支",
+    "push_to_remote": "是否推送到远程"
+  },
   "news_config": {
     "max_articles_per_day": "每日最大文章数",
     "token_budget_per_day": "每日 Token 预算",
@@ -146,6 +353,11 @@ python -m news_bot.job 2025-07-25
     "model": "使用的 LLM 模型",
     "max_tokens": "最大 Token 数",
     "temperature": "生成温度"
+  },
+  "scheduler_config": {
+    "enabled": "是否启用调度器",
+    "timezone": "时区设置",
+    "cron_expression": "Cron表达式"
   }
 }
 ```
@@ -198,13 +410,14 @@ python -m news_bot.job 2025-07-25
 - ✅ AI 摘要（summarizer.py）
 - ✅ Markdown 生成（writer.py）
 - ✅ Git 发布（publisher.py）
+- ✅ 工作流调度（job.py）
 - ✅ 配置系统（config.json）
 - ✅ 全链路测试验证
 
 ### 待开发模块
 
 - ⏳ 新闻筛选（selector.py）
-- ⏳ 工作流调度（job.py）
+- ✅ 工作流调度（job.py）
 - ⏳ GitHub Actions 自动化
 - ⏳ Astro 前端组件
 
