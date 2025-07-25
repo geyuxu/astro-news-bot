@@ -177,19 +177,39 @@ Prompt
 
 ⸻
 
-Step 5-1：GitHub Actions 定时工作流
+更新后的 Step 5-1：改为本地脚本定时执行
 
-Prompt
+取代原先的 GitHub Actions 流程，把「每日新闻」任务完全放到本地或自托管服务器上执行。其余步骤保持不变。
 
-生成 .github/workflows/daily_news.yml：
-- 触发：schedule cron '5 0 * * *'
-- runner: ubuntu-latest
-- 步骤：checkout → setup-python 3.11 → pip install -r requirements.txt → python news_bot/job.py
-- 使用 stefanzweifel/git-auto-commit-action@v5 推送
+要素	说明
+触发方式	cron（Linux/macOS）或 systemd-timer；Windows 可用「任务计划程序」
+脚本文件	run_daily_news.sh（shell 包装）+ 现有 python news_bot/job.py
+日志	追加到 ~/logs/news_bot.log，便于排查
+源代码改动	仅新增脚本，无需改 Python 模块
+
+
+⸻
+
+Step 5-1（本地脚本版）
+
+Prompt（给 Claude Code）
+
+生成一个可在 Linux/macOS 直接执行的 shell 脚本 run_daily_news.sh，功能：
+1. 切换到仓库根目录（脚本与 repo 同级时自动识别）。
+2. 激活虚拟环境（若 `venv` 目录存在则 `source venv/bin/activate`，否则跳过）。
+3. 运行 `python news_bot/job.py`，将 stdout 和 stderr 同时 append 到 ~/logs/news_bot.log。
+4. 运行完毕后打印 “DONE $(date -Iseconds)” 到同一日志。
+5. 在脚本首行加 `#!/usr/bin/env bash`，并 `chmod +x` 提示。
 
 验收标准
-	•	在 GitHub Actions 面板能看到定时任务，每次成功生成并 commit news YYYY-MM-DD
-	•	任务完成时间 < 3 分钟
+	1.	run_daily_news.sh 位于仓库根目录，且可执行 (-rwx)。
+	2.	手动执行 ./run_daily_news.sh --dry-run：
+	•	日志文件 ~/logs/news_bot.log 新增条目，包含各步骤输出与 “DONE …”。
+	•	若仓库无变更，脚本正常退出且不会推送 Git。
+	3.	在 crontab 中添加：
+
+每天 08:05 本地时间执行
+5 8 * * * /path/to/repo/run_daily_news.sh
 
 ⸻
 
@@ -207,19 +227,6 @@ Prompt
 验收标准
 	•	在首页模板插入 <LatestNews /> 后，构建站点能渲染今日新闻卡片
 	•	点击卡片跳转到对应 /news/YYYY-MM-DD/
-
-⸻
-
-Step 7-1：本地定时任务（可选）
-
-Prompt
-
-生成 macOS+Linux cron 示例：
-5 8 * * * /usr/bin/python3 /path/to/news_bot/job.py >> /var/log/news_bot.log 2>&1
-
-验收标准
-	•	crontab -l 能看到记录
-	•	第二天早晨 08:05 本地日志出现成功行
 
 ⸻
 

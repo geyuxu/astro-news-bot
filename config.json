@@ -5,6 +5,11 @@
     "filename_format": "news_{date}.md",
     "use_blog_dir": true
   },
+  "git_config": {
+    "target_branch": "gh-pages",
+    "auto_switch_branch": true,
+    "push_to_remote": true
+  },
   "news_config": {
     "max_articles_per_day": 6,
     "token_budget_per_day": 4000,
@@ -14,5 +19,20 @@
     "model": "gpt-4o",
     "max_tokens": 500,
     "temperature": 0.3
+  },
+  "scheduler_config": {
+    "enabled": true,
+    "timezone": "Asia/Shanghai",
+    "cron_expression": "0 8 * * *",
+    "dry_run": false,
+    "max_retries": 3,
+    "retry_interval_minutes": 30
+  },
+  "logging_config": {
+    "level": "INFO",
+    "log_dir": "logs",
+    "log_file": "scheduler.log",
+    "max_bytes": 10485760,
+    "backup_count": 5
   }
 }

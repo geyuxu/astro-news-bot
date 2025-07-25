@@ -1,5 +1,12 @@
 [
   {
+    "title": "A timeline of the US semiconductor market in 2025",
+    "url": "https://techcrunch.com/2025/07/25/a-timeline-of-the-u-s-semiconductor-market-in-2025/",
+    "published_at": "Fri, 25 Jul 2025 17:01:24 +0000",
+    "source": "RSS - TechCrunch",
+    "description": "From leadership changes at legacy semiconductor companies to wishy washy policy around chip exports, a lot has happened already."
+  },
+  {
     "title": "Lyft to add autonomous shuttles in 2026 as Uber inks more self-driving deals",
     "url": "https://techcrunch.com/2025/07/25/lyft-to-add-autonomous-shuttles-in-2026-as-uber-inks-more-self-driving-deals/",
     "published_at": "Fri, 25 Jul 2025 15:33:23 +0000",
@@ -49,46 +56,53 @@
     "description": "The NATO Innovation Fund (NIF) is entering a new chapter, marked by the arrival of two new partners and the departure of its penultimate founding team partner."
   },
   {
+    "title": "The best iPhones",
+    "url": "https://www.theverge.com/23618862/best-iphone-camera-battery-screen-guide",
+    "published_at": "2025-07-25T14:20:34-04:00",
+    "source": "RSS - The Verge",
+    "description": "The wait is over — kind of. Apple’s iPhone 16 series is now widely available, including the kinda affordable 16E, and its much-hyped Apple Intelligence has arrived courtesy of iOS 18.1. But if you’re "
+  },
+  {
+    "title": "You can now easily buy a Switch 2 without jumping through hoops",
+    "url": "https://www.theverge.com/tech/713828/nintendo-switch-in-stock-best-buy-amazon-target-walmart",
+    "published_at": "2025-07-25T14:00:00-04:00",
+    "source": "RSS - The Verge",
+    "description": "Perhaps we've been thinking the same thing, you and I. That there won't be a long-standing drought of Nintendo Switch 2 availability after all. The console has been easy to buy online from several ret"
+  },
+  {
+    "title": "Superman&#8217;s Fortress of Solitude is a Silver Age man cave inspired by nature&#8217;s beauty",
+    "url": "https://www.theverge.com/film/713692/superman-interview-beth-mickle",
+    "published_at": "2025-07-25T13:45:00-04:00",
+    "source": "RSS - The Verge",
+    "description": "James Gunn knows that most people are familiar with Superman's origin story, which is why DC Studios' new feature about the Man of Steel opens at a point when he has already become a world famous supe"
+  },
+  {
+    "title": "Pebble is officially Pebble again",
+    "url": "https://www.theverge.com/news/713931/pebble-smartwatch-name-trademark-recovered",
+    "published_at": "2025-07-25T13:01:22-04:00",
+    "source": "RSS - The Verge",
+    "description": "Good news for Pebble fans. Not only are the Pebble watches coming back, they’ll also officially be called Pebble watches. “Great news — we’ve been able to recover the trademark for Pebble! Honestly, I"
+  },
+  {
+    "title": "Netflix’s push into tie-in games now includes two weird Happy Gilmore titles",
+    "url": "https://www.theverge.com/games/713886/netflix-happy-gilmore-2-games",
+    "published_at": "2025-07-25T13:00:00-04:00",
+    "source": "RSS - The Verge",
+    "description": "Netflix seems to have finally settled on something resembling a strategy for its gaming efforts, and one of the key pillars is games tied to its shows and movies. That's how we got the likes of Squid "
+  },
+  {
+    "title": "Lyft&#8217;s self-driving shuttle buses are coming soon",
+    "url": "https://www.theverge.com/news/713949/lyft-self-driving-shuttle-buses-holon-urban",
+    "published_at": "2025-07-25T12:46:17-04:00",
+    "source": "RSS - The Verge",
+    "description": "Lyft is partnering with Benteler Mobility to launch a self-driving shuttle service. In late 2026, Lyft plans to deploy the company’s all-electric Holon Urban shuttles in airports and cities around the"
+  },
+  {
     "title": "How to make your iPhone homescreen icons clear using iOS 26",
     "url": "https://www.theverge.com/tech/713748/ios-26-iphone-liquid-glass-home-screen-how-to",
     "published_at": "2025-07-25T10:53:16-04:00",
     "source": "RSS - The Verge",
     "description": "Back in 2024, we described how the then-new iOS 18 enabled you to tint your homescreen icons, allowing you to tweak the look of your iPhone's display. Now, with Apple's introduction of its Liquid Glas"
-  },
-  {
-    "title": "Taste testing battery-flavored tortilla chips",
-    "url": "https://www.theverge.com/news/713693/9-volt-battery-tortilla-chips-rewind-taste-test",
-    "published_at": "2025-07-25T10:49:21-04:00",
-    "source": "RSS - The Verge",
-    "description": "I get a lot of odd pitches in my inbox, but “9V battery-flavored corn chips” still stopped me in my tracks. My mind was ringing with questions (What? Who? Why!?!), but most importantly: What are they "
-  },
-  {
-    "title": "Breaking down Trump’s big gift to the AI industry",
-    "url": "https://www.theverge.com/policy/713788/trump-ai-action-plan-explainer",
-    "published_at": "2025-07-25T10:35:40-04:00",
-    "source": "RSS - The Verge",
-    "description": "President Donald Trump's plan to promote America's AI dominance involves discouraging \"woke AI,\" slashing state and federal regulations, and laying the groundwork to rapidly expand AI development and "
-  },
-  {
-    "title": "Asus’ slim ROG G14 gaming laptop with an RTX 5070 Ti is $350 off",
-    "url": "https://www.theverge.com/tech/713731/asus-rog-g14-zephyrus-gaming-laptop-5070ti-deal-sale",
-    "published_at": "2025-07-25T10:29:51-04:00",
-    "source": "RSS - The Verge",
-    "description": "The Asus ROG Zephyrus G14 has long been a Verge-favorite gaming laptop, and we consider it to be the very best one that you can buy. This year, the lineup became even more powerful and spec-packed whi"
-  },
-  {
-    "title": "Microsoft’s AI CEO thinks Copilot will age and ‘have a room that it lives in’",
-    "url": "https://www.theverge.com/news/713715/microsoft-copilot-appearance-feature-age-mustafa-suleyman-interview",
-    "published_at": "2025-07-25T10:28:13-04:00",
-    "source": "RSS - The Verge",
-    "description": "Mustafa Suleyman, Microsoft’s AI CEO, has a vision of Copilot that involves it being so highly personalized that “it will age.” Microsoft has been increasingly pushing Copilot to be a personalized AI "
-  },
-  {
-    "title": "Diving into Apple’s Liquid Glass",
-    "url": "https://www.theverge.com/the-vergecast/713630/apple-liquid-glass-tesla-diner-vergecast",
-    "published_at": "2025-07-25T08:30:03-04:00",
-    "source": "RSS - The Verge",
-    "description": "Apple has had two months to refine Liquid Glass since introducing the design language at WWDC. It's dialed the effect back, then amped it back up. It's addressed some of the biggest complaints - the C"
   },
   {
     "title": "Trump’s Anti-Bias AI Order Is Just More Bias",
@@ -138,6 +152,13 @@
     "published_at": "Fri, 25 Jul 2025 15:47:28 +0000",
     "source": "RSS - VentureBeat",
     "description": "The new Qwen3-Thinking-2507, as we'll call it for short, now leads or closely trails top-performing models across several major benchmarks."
+  },
+  {
+    "title": "Meta will stop running political ads in the EU",
+    "url": "https://www.engadget.com/big-tech/meta-will-stop-running-political-ads-in-the-eu-162232948.html?src=rss",
+    "published_at": "Fri, 25 Jul 2025 16:22:33 +0000",
+    "source": "RSS - Engadget is a web magazine with obsessive daily coverage of everything new in gadgets and consumer electronics",
+    "description": "<p>Meta will stop allowing political advertising on its platforms in the European Union as of October 2025, blaming the EU’s new &quot;unworkable&quot; transparency rules for what it called a &quot;di"
   },
   {
     "title": "Brave and AdGuard now block Microsoft Recall by default",
